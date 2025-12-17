@@ -147,6 +147,43 @@ This will create a WAR file in `target/education-platform.war`
 2. Right-click project → Run on Server
 3. Select Tomcat server and finish
 
+### Quick run with Jetty (development)
+
+If you prefer to run the webapp quickly without Tomcat (development mode), this project includes a PowerShell helper that uses the Maven Jetty plugin configured in `pom.xml`.
+
+- From PowerShell in the project root run:
+
+   ```powershell
+   .\START-DEV.ps1
+   ```
+
+- To prevent the script from opening a browser automatically:
+
+   ```powershell
+   .\START-DEV.ps1 -NoBrowser
+   ```
+
+- To import the bundled database SQL before starting (if you want the script to create/import the DB), run:
+
+   ```powershell
+   .\START-DEV.ps1 -ImportDb -DbUser root -DbPassword YOUR_PASSWORD -DbName education-platform
+   ```
+
+- For Windows `cmd.exe` users there is also a convenience `START-DEV.bat` that supports similar options:
+
+   ```cmd
+   START-DEV.bat --import-db root YOUR_PASSWORD education-platform "%CD%\src\main\resources\education-platform.sql"
+   START-DEV.bat --nobrowser
+   ```
+
+- When Jetty is up, the app will be available at:
+
+   `http://localhost:8090/education-platform`
+
+- Prerequisites: Java (JDK), Apache Maven (`mvn`) on PATH. The script runs `mvn package` first to download dependencies.
+
+This is the fastest way to iterate during development — `mvn jetty:run-war` is already configured in `pom.xml` to use port `8090` and context path `/education-platform`.
+
 ## 👥 Demo Credentials
 
 ### Student Login

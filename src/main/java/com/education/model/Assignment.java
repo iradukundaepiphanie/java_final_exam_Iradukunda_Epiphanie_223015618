@@ -1,9 +1,11 @@
 package com.education.model;
 
 import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 
 /**
- * Assignment Entity Class
+ * Assignment Entity Class - Enhanced with MCQ and Auto-grading support
  */
 public class Assignment {
     private int assignmentID;
@@ -15,6 +17,19 @@ public class Assignment {
     private int maxPoints;
     private String status;
     private Timestamp createdAt;
+    private boolean submitted;
+    private int submissionCount; // Number of student submissions for this assignment
+
+    // New fields for enhanced assignment features
+    private String assignmentType; // MCQ or ESSAY
+    private boolean timed;
+    private int timeLimit; // in minutes
+    private Date availableFrom;
+    private Date availableUntil;
+    private boolean autoGraded;
+
+    // Related entities
+    private List<AssignmentQuestion> questions;
 
     // Constructors
     public Assignment() {
@@ -97,5 +112,77 @@ public class Assignment {
 
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getAssignmentType() {
+        return assignmentType;
+    }
+
+    public void setAssignmentType(String assignmentType) {
+        this.assignmentType = assignmentType;
+    }
+
+    public boolean isTimed() {
+        return timed;
+    }
+
+    public void setTimed(boolean timed) {
+        this.timed = timed;
+    }
+
+    public int getTimeLimit() {
+        return timeLimit;
+    }
+
+    public void setTimeLimit(int timeLimit) {
+        this.timeLimit = timeLimit;
+    }
+
+    public Date getAvailableFrom() {
+        return availableFrom;
+    }
+
+    public void setAvailableFrom(Date availableFrom) {
+        this.availableFrom = availableFrom;
+    }
+
+    public Date getAvailableUntil() {
+        return availableUntil;
+    }
+
+    public void setAvailableUntil(Date availableUntil) {
+        this.availableUntil = availableUntil;
+    }
+
+    public boolean isAutoGraded() {
+        return autoGraded;
+    }
+
+    public void setAutoGraded(boolean autoGraded) {
+        this.autoGraded = autoGraded;
+    }
+
+    public List<AssignmentQuestion> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<AssignmentQuestion> questions) {
+        this.questions = questions;
+    }
+
+    public boolean isSubmitted() {
+        return submitted;
+    }
+
+    public void setSubmitted(boolean submitted) {
+        this.submitted = submitted;
+    }
+
+    public int getSubmissionCount() {
+        return submissionCount;
+    }
+
+    public void setSubmissionCount(int submissionCount) {
+        this.submissionCount = submissionCount;
     }
 }

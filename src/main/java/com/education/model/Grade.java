@@ -13,7 +13,9 @@ public class Grade {
     private int enrollmentID;
     private String studentName;
     private String assignmentTitle;
+    private String courseName;
     private BigDecimal pointsEarned;
+    private double score;
     private int maxPoints;
     private String feedback;
     private String submissionDate;
@@ -78,6 +80,22 @@ public class Grade {
 
     public void setAssignmentTitle(String assignmentTitle) {
         this.assignmentTitle = assignmentTitle;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
     }
 
     public BigDecimal getPointsEarned() {

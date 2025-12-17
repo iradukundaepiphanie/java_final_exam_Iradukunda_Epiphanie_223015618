@@ -1,0 +1,221 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Course - Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, #1e3a5f 0%, #152a45 100%);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .sidebar-header {
+            padding: 25px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .sidebar-header h2 {
+            font-size: 20px;
+            color: #FBC02D;
+        }
+        .menu-item {
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .menu-item:hover, .menu-item.active {
+            background: rgba(251, 192, 45, 0.1);
+            border-left: 3px solid #FBC02D;
+        }
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 30px;
+        }
+        .header {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2c3e50;
+            font-size: 28px;
+        }
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #FBC02D;
+        }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary {
+            background: #FBC02D;
+            color: #1e3a5f;
+            font-weight: 600;
+        }
+        .btn-primary:hover {
+            background: #f9b000;
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-graduation-cap"></i> UR</h2>
+            <p style="font-size: 12px; opacity: 0.8;">University of Rwanda</p>
+        </div>
+        <a href="${pageContext.request.contextPath}/admin/dashboard" class="menu-item">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+        <a href="${pageContext.request.contextPath}/admin/students" class="menu-item">
+            <i class="fas fa-user-graduate"></i> Students
+        </a>
+        <a href="${pageContext.request.contextPath}/admin/instructors" class="menu-item">
+            <i class="fas fa-chalkboard-teacher"></i> Instructors
+        </a>
+        <a href="${pageContext.request.contextPath}/admin/courses" class="menu-item active">
+            <i class="fas fa-book"></i> Courses
+        </a>
+        <a href="${pageContext.request.contextPath}/logout" class="menu-item">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1><i class="fas fa-edit"></i> Edit Course</h1>
+        </div>
+
+        <c:if test="${not empty error}">
+            <div class="error-message">${error}</div>
+        </c:if>
+
+        <div class="form-container">
+            <form action="${pageContext.request.contextPath}/admin/edit-course" method="post">
+                <input type="hidden" name="courseId" value="${course.courseID}">
+                
+                <div class="form-group">
+                    <label for="courseName">Course Name</label>
+                    <input type="text" id="courseName" name="courseName" value="${course.courseName}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="courseCode">Course Code</label>
+                    <input type="text" id="courseCode" name="courseCode" value="${course.courseCode}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" required>${course.description}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="credits">Credits</label>
+                    <input type="number" id="credits" name="credits" value="${course.credits}" min="1" max="6" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="instructorId">Instructor</label>
+                    <select id="instructorId" name="instructorId" required>
+                        <option value="">-- Select Instructor --</option>
+                        <c:forEach var="instructor" items="${instructors}">
+                            <option value="${instructor.instructorID}" ${instructor.instructorID == course.instructorID ? 'selected' : ''}>
+                                ${instructor.firstName} ${instructor.lastName}
+                            </option>
+                        </c:forEach>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status" name="status" required>
+                        <option value="Active" ${course.status == 'Active' ? 'selected' : ''}>Active</option>
+                        <option value="Inactive" ${course.status == 'Inactive' ? 'selected' : ''}>Inactive</option>
+                    </select>
+                </div>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Update Course
+                    </button>
+                    <a href="${pageContext.request.contextPath}/admin/courses" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
